@@ -28,6 +28,7 @@ app.post('/chat', async (req, res) => {
     });
 
     const data = await response.json();
+    console.log(data);
     const reply = data.choices?.[0]?.message?.content || "Sorry, I can't answer now.";
     res.json({ reply });
   } catch (err) {
@@ -38,5 +39,6 @@ app.post('/chat', async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
 
 
