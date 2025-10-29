@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Artist Equality Chatbot</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #faf7f2;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h2 {
+      color: #c94f7c;
+      margin-bottom: 10px;
+    }
+    #chat {
+      width: 100%;
+      max-width: 450px;
+      height: 60vh;
+      border: 2px solid #c94f7c;
+      border-radius: 10px;
+      background: white;
+      padding: 10px;
+      overflow-y: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .msg {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+    .user { background: #fce4ec; margin-left: auto; }
+    .bot { background: #f3f3f3; }
+    #controls {
+      display: flex;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 450px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #c94f7c;
+      border-radius: 8px;
+    }
+    button {
+      margin-left: 10px;
+      background: #c94f7c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    button:hover { background: #b33e6a; }
+  </style>
+</head>
+<body>
+  <h2>🎨 Artist Equality Chatbot</h2>
+  <div id="chat"></div>
+  <div id="controls">
+    <input id="input" placeholder="Ask me about artists or discrimination..." />
+    <button id="send">Send</button>
+  </div>
+
+  <script>
+    const serverUrl = "https://YOUR-HOSTED-SERVER-URL/chat"; // replace this after hosting
+
+    const chatBox = document.getElementById("chat");
+    const input = document.getElementById("input");
+    const send = document.getElementById("send");
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.classList.add("msg", sender);
+      msg.textContent = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage(text, "user");
+      input.value = "";
+      const res = await fetch(serverUrl, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: text}),
+      });
+      const data = await res.json();
+      addMessage(data.reply, "bot");
+    }
+
+    send.onclick = sendMessage;
+    input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
+  </script>
+</body>
+</html>
