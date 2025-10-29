@@ -23,7 +23,7 @@ app.post('/chat', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${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}`
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
@@ -46,4 +46,5 @@ app.post('/chat', async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server listening on ${port}`));
+
 
