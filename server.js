@@ -23,7 +23,7 @@ app.post('/chat', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_KEY}`
+        'Authorization': `Bearer ${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}`
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
@@ -36,7 +36,7 @@ app.post('/chat', async (req, res) => {
     });
 
     const data = await openaiResp.json();
-    const assistant = data?.choices?.[0]?.message?.content ?? data?.choices?.[0]?.text ?? '';
+    const assistant = data?.choices?.[0]?.message?.content ?? data?.choices?.[0]?.text ?? "Sorry, I can't respond right now";
     res.json({ reply: assistant, raw: data });
   } catch (err) {
     console.error(err);
@@ -46,3 +46,4 @@ app.post('/chat', async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server listening on ${port}`));
+
