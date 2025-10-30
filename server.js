@@ -28,6 +28,9 @@ app.post('/chat', async (req, res) => {
     });
 
     const data = await response.json();
+    let reply = data.choices[0].message.content.trim();
+    reply = reply.replace(/(\d+\.|\-)/g, '\n$1');
+    res.json({ reply });
     console.log(data);
     const reply = data.choices?.[0]?.message?.content || "Sorry, I can't answer now.";
     res.json({ reply });
@@ -39,6 +42,7 @@ app.post('/chat', async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
 
 
 
