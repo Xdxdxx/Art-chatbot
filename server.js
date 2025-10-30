@@ -23,7 +23,7 @@ app.post('/chat', async (req, res) => {
           { role: 'system', content: 'You are a friendly AI about artists and discrimination.' },
           { role: 'user', content: userMessage }
         ],
-        max_tokens: 300
+        max_tokens: 1000
       })
     });
 
@@ -39,6 +39,7 @@ app.post('/chat', async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
 
 
 
