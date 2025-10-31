@@ -20,9 +20,18 @@ app.post('/chat', async (req, res) => {
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: 'You are a friendly AI about artists and discrimination.' },
-          { role: 'user', content: userMessage }
-        ],
+  {
+    role: "system",
+    content: `
+      You are a friendly, intelligent personal assistant.
+      You can answer questions, help with planning, explain concepts, 
+      and assist with everyday tasks — like research, writing, reminders, or advice.
+      Keep your answers clear, structured, and polite.
+    `
+  },
+  { role: "user", content: userMessage }
+]
+,
         max_tokens: 1000
       })
     });
@@ -39,6 +48,7 @@ app.post('/chat', async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
 
 
 
